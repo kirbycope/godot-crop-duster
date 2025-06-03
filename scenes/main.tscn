@@ -1,0 +1,62 @@
+[gd_scene load_steps=8 format=3 uid="uid://bj28vy3lip750"]
+
+[ext_resource type="Texture2D" uid="uid://bg0kkxkqyq2d3" path="res://assets/LimeZu/character_generator/business_tim_32x32.png" id="1_o5qli"]
+
+[sub_resource type="TileSet" id="TileSet_0wfyh"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_sugp2"]
+size = Vector2(28, 42)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jyhfs"]
+atlas = ExtResource("1_o5qli")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_tbgi4"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jyhfs")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tefeu"]
+atlas = ExtResource("1_o5qli")
+region = Rect2(96, 32, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_o6xl0"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tefeu")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="Main" type="Node2D"]
+
+[node name="TileMapLayer" type="TileMapLayer" parent="."]
+tile_set = SubResource("TileSet_0wfyh")
+
+[node name="Player" type="CharacterBody2D" parent="."]
+position = Vector2(576, 323)
+
+[node name="Camera2D" type="Camera2D" parent="Player"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
+shape = SubResource("RectangleShape2D_sugp2")
+
+[node name="Top" type="AnimatedSprite2D" parent="Player"]
+position = Vector2(0, -27)
+sprite_frames = SubResource("SpriteFrames_tbgi4")
+autoplay = "default"
+frame_progress = 0.622861
+
+[node name="Bottom" type="AnimatedSprite2D" parent="Player"]
+position = Vector2(0, 5)
+sprite_frames = SubResource("SpriteFrames_o6xl0")
+frame_progress = 0.663467
