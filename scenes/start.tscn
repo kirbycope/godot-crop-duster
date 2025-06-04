@@ -1,11 +1,67 @@
-[gd_scene load_steps=9 format=3 uid="uid://c0n5e3gaqdpw2"]
+[gd_scene load_steps=14 format=3 uid="uid://c0n5e3gaqdpw2"]
 
-[ext_resource type="Texture2D" uid="uid://dkx4onbk1bgd6" path="res://assets/godot-crop-duster-2.png" id="1_0auqf"]
 [ext_resource type="Script" uid="uid://oxdntefh78yf" path="res://scenes/start.gd" id="1_y16t7"]
 [ext_resource type="AudioStream" uid="uid://cmhuqya532dt2" path="res://assets/Jacoblivesmusic/Digital Airways LOOP 1.wav" id="2_bodal"]
 [ext_resource type="FontFile" uid="uid://wwtg4ir8hi68" path="res://assets/ka1.ttf" id="3_kdmts"]
 [ext_resource type="FontFile" uid="uid://bgvldkj8uk0n" path="res://assets/Airplane Pilots.otf" id="3_y16t7"]
 [ext_resource type="Script" uid="uid://scesi7sfoal6" path="res://scenes/pulsing_label.gd" id="4_0auqf"]
+[ext_resource type="Texture2D" uid="uid://bcmeppyvr53eq" path="res://assets/background-3.png" id="6_4ge6i"]
+[ext_resource type="Texture2D" uid="uid://ditoutxkg7t2o" path="res://assets/businessman-1.png" id="7_8itgj"]
+
+[sub_resource type="Animation" id="Animation_m8nf6"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Businessman:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-436, 1140)]
+}
+
+[sub_resource type="Animation" id="Animation_tn317"]
+resource_name = "intro"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Businessman:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(-436, 1140), Vector2(438, 460)]
+}
+
+[sub_resource type="Animation" id="Animation_4ge6i"]
+resource_name = "loop"
+length = 1.8
+loop_mode = 2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Businessman:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.6, 1.2, 1.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(438, 460), Vector2(438, 480), Vector2(438, 460), Vector2(438, 480)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_pgjjs"]
+_data = {
+&"RESET": SubResource("Animation_m8nf6"),
+&"intro": SubResource("Animation_tn317"),
+&"loop": SubResource("Animation_4ge6i")
+}
 
 [sub_resource type="LabelSettings" id="LabelSettings_4ge6i"]
 font = ExtResource("3_y16t7")
@@ -21,22 +77,28 @@ font_color = Color(0, 0, 0, 1)
 [node name="Start" type="Node2D"]
 script = ExtResource("1_y16t7")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(640, 360)
-scale = Vector2(0.85, 0.85)
-texture = ExtResource("1_0auqf")
-
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("2_bodal")
 autoplay = true
 
-[node name="Control" type="Control" parent="."]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_pgjjs")
+}
+autoplay = "RESET"
+
+[node name="Background" type="Sprite2D" parent="."]
+position = Vector2(640, 380)
+scale = Vector2(0.84, 0.84)
+texture = ExtResource("6_4ge6i")
+
+[node name="UI" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 0
 offset_right = 1280.0
 offset_bottom = 720.0
 
-[node name="Title" type="Label" parent="Control"]
+[node name="Title" type="Label" parent="UI"]
 layout_mode = 0
 offset_left = 40.0
 offset_top = 240.0
@@ -46,7 +108,7 @@ text = "Crop            Duster"
 label_settings = SubResource("LabelSettings_4ge6i")
 horizontal_alignment = 2
 
-[node name="PressStart" type="Label" parent="Control"]
+[node name="PressStart" type="Label" parent="UI"]
 layout_mode = 1
 anchors_preset = 6
 anchor_left = 1.0
@@ -63,7 +125,7 @@ text = "PRESS START!"
 label_settings = SubResource("LabelSettings_8itgj")
 script = ExtResource("4_0auqf")
 
-[node name="Copyright" type="Label" parent="Control"]
+[node name="Copyright" type="Label" parent="UI"]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -76,3 +138,10 @@ offset_right = 85.0
 grow_horizontal = 2
 grow_vertical = 0
 text = "© 2025, Timothy Cope"
+
+[node name="Businessman" type="Sprite2D" parent="."]
+position = Vector2(-436, 1140)
+scale = Vector2(0.75, 0.75)
+texture = ExtResource("7_8itgj")
+
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
