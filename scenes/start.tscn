@@ -1,6 +1,6 @@
 [gd_scene load_steps=14 format=3 uid="uid://c0n5e3gaqdpw2"]
 
-[ext_resource type="Script" uid="uid://oxdntefh78yf" path="res://scenes/start.gd" id="1_y16t7"]
+[ext_resource type="Script" uid="uid://oxdntefh78yf" path="res://scripts/start.gd" id="1_y16t7"]
 [ext_resource type="AudioStream" uid="uid://cmhuqya532dt2" path="res://assets/Jacoblivesmusic/Digital Airways LOOP 1.wav" id="2_bodal"]
 [ext_resource type="FontFile" uid="uid://wwtg4ir8hi68" path="res://assets/ka1.ttf" id="3_kdmts"]
 [ext_resource type="FontFile" uid="uid://bgvldkj8uk0n" path="res://assets/Airplane Pilots.otf" id="3_y16t7"]
